@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "bulletmanager.h": "c",
+        "math.h": "c",
+        "stdlib.h": "c",
+        "raylib.h": "c",
+        "stdio.h": "c",
+        "enemy.h": "c",
+        "uimanager.h": "c",
+        "collisionmanager.h": "c",
+        "clove-unit.h": "c",
+        "enemymanager.h": "c",
+        "rlgl.h": "c"
+    }
+}
