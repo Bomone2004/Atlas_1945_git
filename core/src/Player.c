@@ -11,16 +11,16 @@ playerSprite_t* playerSprite_new(BulletManager_t* bulletManager,UIScreen_t* UI_S
     player->screenHeight = GetScreenHeight();
 
     //Spawn location
-    player->position.x = 400;
-    player->position.y = player->screenHeight-100; 
+    player->position.x = 500;
+    player->position.y = player->screenHeight-200; 
 
     player->bulletManagerRef = bulletManager;
 
     //animation for the player
     player->nextFrameTimer = 1.0f; 
 
-    player->playerPixelWidth = 60;
-    player->playerPixelHeight = 60;
+    player->playerPixelWidth = 63;
+    player->playerPixelHeight = 66;
     player->currentFrame = 0;
     player->speed = 10.0f;
 
@@ -73,7 +73,7 @@ void UpdatePlayer(playerSprite_t* playerSprite)
         if (playerSprite->position.x < 0) playerSprite->position.x = 0;
         if (playerSprite->position.x > GetScreenWidth() - 50) playerSprite->position.x = GetScreenWidth() - 50;
         if (playerSprite->position.y < 0) playerSprite->position.y = 0;
-        if (playerSprite->position.y + playerSprite->playerPixelHeight > GetScreenHeight() - playerSprite->UI_ScreenRef->height) playerSprite->position.y = GetScreenHeight() - playerSprite->UI_ScreenRef->height - 50;
+        if (playerSprite->position.y + playerSprite->playerPixelHeight > GetScreenHeight() - playerSprite->UI_ScreenRef->height +10 ) playerSprite->position.y = GetScreenHeight() - playerSprite->UI_ScreenRef->height - 50;
         //Shoot
         playerSprite->shootCooldown -= GetFrameTime();
         if (IsKeyDown(KEY_SPACE) && playerSprite->shootCooldown<=0)
@@ -85,8 +85,8 @@ void UpdatePlayer(playerSprite_t* playerSprite)
 }
 
 void DrawPlayer(playerSprite_t* playerSprite,Texture2D spritesheet)
-{
-    Rectangle source_player = (Rectangle){301, 103 + (playerSprite[0].playerPixelHeight*playerSprite->currentFrame+10), playerSprite[0].playerPixelWidth, playerSprite[0].playerPixelHeight};
+{                                                                                                                                                                                    //Remouve White Line
+    Rectangle source_player = (Rectangle){301, 103 + (playerSprite[0].playerPixelHeight*playerSprite->currentFrame), playerSprite[0].playerPixelWidth, playerSprite[0].playerPixelHeight - 1};
     Rectangle dest_player = (Rectangle){playerSprite[0].position.x,playerSprite[0].position.y, playerSprite[0].playerPixelWidth,playerSprite[0].playerPixelHeight};  //(float)GetScreenWidth(), (float)GetScreenHeight()
     Vector2 orig_player = (Vector2){0};
 

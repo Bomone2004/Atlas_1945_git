@@ -10,8 +10,8 @@ Bullet_t* Bullet_new()
     bullet->screenHeight = GetScreenHeight();
 
     //Size of Pixel in the atlas
-    bullet->bulletPixelWidth = 33;  
-    bullet->bulletPixelHeight = 33; 
+    bullet->bulletPixelWidth = 32;  
+    bullet->bulletPixelHeight = 32; 
 
     //Give Direction
     bullet->enemyBulletDirection = (Vector2){0, 0};

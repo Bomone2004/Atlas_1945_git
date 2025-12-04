@@ -79,14 +79,14 @@ void UpdateBullets(BulletManager_t* bulletManager){
 void DrawBulletManager(BulletManager_t* bulletManager, Texture2D spritesheet){
     for (int i = 0; i < bulletManager->bulletCount; i++) {
        if (bulletManager->playerBUllets[i]->isActive) {
-            Rectangle source_bullet = (Rectangle){36, 169, bulletManager->playerBUllets[i]->bulletPixelWidth, bulletManager->playerBUllets[i]->bulletPixelHeight};
+            Rectangle source_bullet = (Rectangle){36, 169, bulletManager->playerBUllets[i]->bulletPixelWidth , bulletManager->playerBUllets[i]->bulletPixelHeight };
             Rectangle dest_bullet = (Rectangle){bulletManager->playerBUllets[i]->position.x,bulletManager->playerBUllets[0]->position.y, bulletManager->playerBUllets[i]->bulletPixelWidth*0.5f,bulletManager->playerBUllets[i]->bulletPixelHeight*0.5f};  //(float)GetScreenWidth(), (float)GetScreenHeight()
             Vector2 orig_bullet = (Vector2){0};
 
             DrawTexturePro(spritesheet, source_bullet, dest_bullet, orig_bullet, 0, WHITE);
        }
        if (bulletManager->enemyBullets[i]->isActive) {
-            Rectangle source_bullet = (Rectangle){((bulletManager->enemyBullets[i]->bulletPixelWidth  +1) * bulletManager->enemyBullets[i]->correctFrame), 235, bulletManager->enemyBullets[i]->bulletPixelWidth, bulletManager->enemyBullets[i]->bulletPixelHeight};
+            Rectangle source_bullet = (Rectangle){((bulletManager->enemyBullets[i]->bulletPixelWidth  ) * bulletManager->enemyBullets[i]->correctFrame), 235, bulletManager->enemyBullets[i]->bulletPixelWidth, bulletManager->enemyBullets[i]->bulletPixelHeight};
             Rectangle dest_bullet = (Rectangle){bulletManager->enemyBullets[i]->position.x,bulletManager->enemyBullets[i]->position.y, bulletManager->enemyBullets[i]->bulletPixelWidth*0.5f,bulletManager->enemyBullets[i]->bulletPixelHeight*0.5f};  //(float)GetScreenWidth(), (float)GetScreenHeight()
             Vector2 orig_bullet = (Vector2){0};
             DrawTexturePro(spritesheet, source_bullet, dest_bullet, orig_bullet, bulletManager->enemyBullets[i]->necessaryRotation, WHITE);

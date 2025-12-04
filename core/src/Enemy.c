@@ -22,8 +22,8 @@ enemySprite_t* enemySprite_new(BulletManager_t* bulletManager,UIScreen_t* UI_Scr
     enemy->CorrectSpriteFrame = 1; 
 
     //Offset needed to locate the enemy in the atlas
-    enemy->enemyPixelWidth = 33;
-    enemy->enemyPixelHeight = 33;
+    enemy->enemyPixelWidth = 32;
+    enemy->enemyPixelHeight = 32;
 
     //time to shoot
     enemy->time = 2.0f; 

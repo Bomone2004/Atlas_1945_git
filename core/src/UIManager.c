@@ -31,7 +31,7 @@ void DrawUI(UIScreen_t* Ui_Screen, Texture2D spritesheet)
 
 void DrawPlayerLives(UIScreen_t* Ui_Screen, Texture2D spritesheet){
     for(int i = 0; i < Ui_Screen->playerHP; i++){
-        Rectangle sourceLogo = (Rectangle){200, 265, 30, 30}; 
+        Rectangle sourceLogo = (Rectangle){202, 268, 32, 32}; 
         Rectangle destLogo = (Rectangle){100 + 50 * i, (float)GetScreenHeight()-80,50,50};
         Vector2 origLogo = (Vector2){0};
 
@@ -49,7 +49,7 @@ void DrawScoreBoard(UIScreen_t* Ui_Screen, Texture2D spritesheet)
         if(currentChar < 9 && currentChar >= 0)
         {
             Rectangle sourceLogo = (Rectangle){580 + (10 * currentChar), 105, 10, 20};
-            Rectangle destLogo = (Rectangle){350 + (32*i), (float)GetScreenHeight()-50,30,60};
+            Rectangle destLogo = (Rectangle){500 + (32*i), (float)GetScreenHeight()-70,30,60};
             Vector2 origLogo = (Vector2){0};
             DrawTexturePro(spritesheet, sourceLogo, destLogo, origLogo ,0, WHITE);
         }

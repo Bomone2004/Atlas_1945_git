@@ -72,8 +72,8 @@ void ActivateEnemy(EnemyContainer_t* container) {
 void DrawsEnemiesManager(EnemyContainer_t* enemyContainer, Texture2D spritesheet) {
     for (int i = 0; i < enemyContainer->enemyCount; i++) {
         //If the enemy is active he uses the sprite for the enemy
-       if (enemyContainer->enemies[i]->isActive) {
-            Rectangle source_enemy = (Rectangle){((enemyContainer->enemies[i]->enemyPixelWidth  +1) * enemyContainer->enemies[i]->CorrectSpriteFrame), 33, enemyContainer->enemies[i]->enemyPixelWidth, enemyContainer->enemies[i]->enemyPixelHeight};
+       if (enemyContainer->enemies[i]->isActive) {//Remouve White Line                                                                      //Remouve White Line                                     //Remouve White Line
+            Rectangle source_enemy = (Rectangle){((1+enemyContainer->enemies[i]->enemyPixelWidth) * enemyContainer->enemies[i]->CorrectSpriteFrame) +4, 37, enemyContainer->enemies[i]->enemyPixelWidth -1, enemyContainer->enemies[i]->enemyPixelHeight };
             Rectangle dest_enemy = (Rectangle){enemyContainer->enemies[i]->position.x,enemyContainer->enemies[i]->position.y, enemyContainer->enemies[i]->enemyPixelWidth,enemyContainer->enemies[i]->enemyPixelHeight};  //(float)GetScreenWidth(), (float)GetScreenHeight()
             Vector2 orig_enemy = (Vector2){0};
 
@@ -81,8 +81,8 @@ void DrawsEnemiesManager(EnemyContainer_t* enemyContainer, Texture2D spritesheet
        }
        //else if he is dead he uses the sprite for the explosion "montage"
        else if(enemyContainer->enemies[i]->isDead)
-       {
-            Rectangle source_enemy = (Rectangle){(70+( 32 * enemyContainer->enemies[i]->CorrectSpriteFrame)), 170, enemyContainer->enemies[i]->enemyPixelWidth, enemyContainer->enemies[i]->enemyPixelHeight};
+       {                                                                                                                                                   //Remouve White Line                               //Remouve White Line
+            Rectangle source_enemy = (Rectangle){(71+( 33 * enemyContainer->enemies[i]->CorrectSpriteFrame)), 170, enemyContainer->enemies[i]->enemyPixelWidth -1, enemyContainer->enemies[i]->enemyPixelHeight -1};
             Rectangle dest_enemy = (Rectangle){enemyContainer->enemies[i]->position.x,enemyContainer->enemies[i]->position.y, enemyContainer->enemies[i]->enemyPixelWidth,enemyContainer->enemies[i]->enemyPixelHeight};  //(float)GetScreenWidth(), (float)GetScreenHeight()
             Vector2 orig_enemy = (Vector2){0};
 
