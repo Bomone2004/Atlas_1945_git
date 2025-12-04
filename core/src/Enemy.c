@@ -1,7 +1,9 @@
 #include "Enemy.h"
 
 enemySprite_t* enemySprite_new(BulletManager_t* bulletManager,UIScreen_t* UI_Screen){
-    enemySprite_t* enemy = calloc(1, sizeof(enemySprite_t)); //Allocate one enemy into the memory
+    //Allocate one enemy into the memory
+    enemySprite_t* enemy = calloc(1, sizeof(enemySprite_t)); 
+
     enemy->bulletManagerRef = bulletManager; //Reference needed for shoot function
     enemy->UI_ScreenRef = UI_Screen; //Reference needed to modify score after death
 
@@ -11,21 +13,25 @@ enemySprite_t* enemySprite_new(BulletManager_t* bulletManager,UIScreen_t* UI_Scr
     enemy->screenHeight = GetScreenHeight();
     enemy->isActive = false;
 
+    //AudioDevice
     const char* app_dir = GetApplicationDirectory();
-    TraceLog(LOG_INFO, "Bin directory: %s", app_dir);
     ChangeDirectory(app_dir);
     enemy->explosionSound = LoadSound("resources/assets/audio/snd_explosion1.wav");
 
-    enemy->CorrectSpriteFrame = 1; //Used to determine the correct frame to use based on the direction of the enemy
+    //Used to determine the correct frame to use based on the direction of the enemy
+    enemy->CorrectSpriteFrame = 1; 
 
     //Offset needed to locate the enemy in the atlas
     enemy->enemyPixelWidth = 33;
     enemy->enemyPixelHeight = 33;
 
-    enemy->time = 2.0f; //time to shoot
+    //time to shoot
+    enemy->time = 2.0f; 
+    
     enemy->canShoot = false;
     enemy->isDead = false;
-    enemy->explosionTimer = 0.2f; //time before the next explosion frame
+    //time before the next explosion frame
+    enemy->explosionTimer = 0.2f; 
 
     enemy->speed = 3.0f;
     enemy->dir = (Vector2){0, 0};
@@ -72,32 +78,36 @@ void UpdateEnemy(enemySprite_t* enemySprite)
         //Enemy movement and relative out of bound checks
         enemySprite->position.x += enemySprite->dir.x * enemySprite->speed;
         enemySprite->position.y += enemySprite->dir.y * enemySprite->speed;
-        if (enemySprite->position.x < 0)
-        {
-            enemySprite->position.x = 5;
+
+        if (enemySprite->position.x < 0){
+
             enemySprite->dir.x *= -1;
             enemySprite->dir.y = 0;
             enemySprite->CorrectSpriteFrame = 2;
+            enemySprite->position.x = 5 * enemySprite->dir.x;
         } 
-        if (enemySprite->position.x > GetScreenWidth() - (enemySprite->enemyPixelWidth))
-        {
-            enemySprite->position.x = (GetScreenWidth() - (enemySprite->enemyPixelWidth*2)) * enemySprite->dir.x;
+        if (enemySprite->position.x > GetScreenWidth() - (enemySprite->enemyPixelWidth)){
+
             enemySprite->dir.x *= -1;
             enemySprite->dir.y = 0;
             enemySprite->CorrectSpriteFrame = 6;
+            enemySprite->position.x = (GetScreenWidth() - (enemySprite->enemyPixelWidth*2)) * enemySprite->dir.x;
 
         } 
-        if (enemySprite->position.y < 0)
-        {
+        if (enemySprite->position.y < 0){
 
             enemySprite->dir.y *= -1;
             enemySprite->dir.x = 0;
             enemySprite->CorrectSpriteFrame = 0;
             enemySprite->position.y = 5 * enemySprite->dir.y;
         }
-        if (enemySprite->position.y + enemySprite->enemyPixelHeight > GetScreenHeight() - enemySprite->UI_ScreenRef->height)
-        {
-            enemySprite->isActive = false;
+        if (enemySprite->position.y + enemySprite->enemyPixelHeight > GetScreenHeight() - enemySprite->UI_ScreenRef->height){
+
+            enemySprite->dir.y *= -1;
+            enemySprite->dir.x = 0;
+            enemySprite->CorrectSpriteFrame = 4;
+
+            enemySprite->position.y = GetScreenHeight() - enemySprite->UI_ScreenRef->height - (enemySprite->enemyPixelHeight*2) ;
         } 
     }
 }
@@ -128,15 +138,14 @@ Vector2 GetRandomDirection(enemySprite_t* enemySprite)
     enemySprite->CorrectSpriteFrame = GetRandomValue(0, 4);
     
     switch (enemySprite->CorrectSpriteFrame) {
-        case 0: return (Vector2){ 0, 1 };
-        case 1: return (Vector2){ 1, 1 };
-        case 2: return (Vector2){ 1, 0 };
-        case 3: 
-            enemySprite->CorrectSpriteFrame = 6;
-            return (Vector2){ -1, 0 };
-        case 4: 
-            enemySprite->CorrectSpriteFrame = 7;
-            return (Vector2){ -1, 1 };
+        case 0: return (Vector2){ 0, 1 };   // giù
+        case 1: return (Vector2){ 1, 1 };   // diagonale ha destra giù
+        case 2: return (Vector2){ 1, 0 };   // destra
+        case 3: return (Vector2){ 1, -1 };  // diagonale ha destra su
+        case 4: return (Vector2){ 0, -1 };  // su
+        case 5: return (Vector2){ -1, -1 }; // diagonale ha sinistra su
+        case 6: return (Vector2){ -1, 0 };  // sinistra
+        case 7: return (Vector2){ -1, 1 };  // diagonale ha sinistra giù
     }
     return (Vector2){0, 0};
 

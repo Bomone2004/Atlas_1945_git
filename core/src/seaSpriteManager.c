@@ -23,6 +23,9 @@ seaSpriteManager_t* seaSprite_Manager_new(int screenWidth,int screenHeight){
     seaSpriteManager->isFirst = true;
     seaSpriteManager->index = -20;
 
+    PopulateSeaSpriteManagerArray(seaSpriteManager);
+    SpawnSeaSprite(seaSpriteManager);
+
     return seaSpriteManager;
 
 }

@@ -2,7 +2,8 @@
 #include "BulletManager.h"
 
 playerSprite_t* playerSprite_new(BulletManager_t* bulletManager,UIScreen_t* UI_Screen){
-    playerSprite_t* player = calloc(1, sizeof(playerSprite_t)); //Allocation of a player in memory
+    //Allocation of a player in memory
+    playerSprite_t* player = calloc(1, sizeof(playerSprite_t)); 
     player->hp = 3;
     player->UI_ScreenRef = UI_Screen;
 
@@ -15,16 +16,24 @@ playerSprite_t* playerSprite_new(BulletManager_t* bulletManager,UIScreen_t* UI_S
 
     player->bulletManagerRef = bulletManager;
 
-    player->nextFrameTimer = 1.0f; //animation for the player
+    //animation for the player
+    player->nextFrameTimer = 1.0f; 
+
     player->playerPixelWidth = 60;
     player->playerPixelHeight = 60;
     player->currentFrame = 0;
-    player->speed = 15.0f;
+    player->speed = 10.0f;
+
     //invincibility after getting hit
     player->invisibilyFrames = 120.0f;
     player->isHit = false;
 
     player->shootCooldown = 0.0f;
+
+    //Change alpha whene is hit
+    player->speedAplha = 4.0f;
+    player->alpha = 1.0f;
+
     return player;
 }
 
@@ -78,10 +87,18 @@ void UpdatePlayer(playerSprite_t* playerSprite)
 void DrawPlayer(playerSprite_t* playerSprite,Texture2D spritesheet)
 {
     Rectangle source_player = (Rectangle){301, 103 + (playerSprite[0].playerPixelHeight*playerSprite->currentFrame+10), playerSprite[0].playerPixelWidth, playerSprite[0].playerPixelHeight};
-    Rectangle dest_player = (Rectangle){playerSprite[0].position.x,playerSprite[0].position.y, playerSprite[0].playerPixelWidth*0.5f,playerSprite[0].playerPixelHeight*0.5f};  //(float)GetScreenWidth(), (float)GetScreenHeight()
+    Rectangle dest_player = (Rectangle){playerSprite[0].position.x,playerSprite[0].position.y, playerSprite[0].playerPixelWidth,playerSprite[0].playerPixelHeight};  //(float)GetScreenWidth(), (float)GetScreenHeight()
     Vector2 orig_player = (Vector2){0};
 
-    DrawTexturePro(spritesheet, source_player, dest_player, orig_player ,0, WHITE);
+    float t = GetTime();
+    if(playerSprite->isHit == true){
+        playerSprite->alpha = (sinf(t * playerSprite->speedAplha) + 1.0f) / 2.0f;
+    }
+    else if(playerSprite->isHit == false){
+        playerSprite->alpha = 1;
+    }
+
+    DrawTexturePro(spritesheet, source_player, dest_player, orig_player ,0, Fade(WHITE, playerSprite->alpha));
 }
 
 //removes a life from the player and the ui as well
@@ -95,7 +112,6 @@ void PlayerOnCollision(playerSprite_t* playerSprite)
     }
 }
 
-//Free the memory occupied by the player at the end of program and set all variables to their default value
 void FreePlayer(playerSprite_t* playerSprite)
 {
     playerSprite->bulletManagerRef = NULL;

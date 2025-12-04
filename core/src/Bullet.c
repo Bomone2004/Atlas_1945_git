@@ -3,20 +3,24 @@
 
 Bullet_t* Bullet_new()
 {
-    Bullet_t* bullet = calloc(1, sizeof(Bullet_t)); //Allocation in memory of a bullet size;
+    Bullet_t* bullet = calloc(1, sizeof(Bullet_t)); //Allocation in memory;
     bullet->position.x = 0.0f;
     bullet->position.y = 0.0f;
     bullet->screenWidth = GetScreenWidth();
     bullet->screenHeight = GetScreenHeight();
 
-    bullet->bulletPixelWidth = 33; //Width of the pixel in the atlas
-    bullet->bulletPixelHeight = 33;//Height of the pixel in the atlas
+    //Size of Pixel in the atlas
+    bullet->bulletPixelWidth = 33;  
+    bullet->bulletPixelHeight = 33; 
 
+    //Give Direction
     bullet->enemyBulletDirection = (Vector2){0, 0};
 
-    bullet->speed = 10.0f;
-    bullet->correctFrame = 0; //Used to determine the correct frame to use when drawing the bullet based on his direction
-    bullet->necessaryRotation = 0;//Since bullet looking up and down where in different places of the atlas i used this variable to simple rotate the bullet looking right either -90 degrees or 90 degrees
+    bullet->speed = 7.0f;
+
+    //Give Correct Bullet Frame
+    bullet->correctFrame = 0;
+    bullet->necessaryRotation = 0;
     return bullet;
 }
 
@@ -36,7 +40,6 @@ void UpdateEnemyBullet(Bullet_t* bullet)
     }
 }
 
-//Player bullet is only able to go up so it has less checks
 void UpdatePlayerBullet(Bullet_t* bullet)
 {
     bullet->position.y -= bullet->speed;
@@ -44,7 +47,6 @@ void UpdatePlayerBullet(Bullet_t* bullet)
     bullet->isActive = false;
 }
 
-//Function used to determine the correct frame to use to match the direction of the bullet
 void GetCorrectFrame(Bullet_t* bullet, Vector2 dir)
 {
     int currentX = dir.x;
@@ -55,7 +57,7 @@ void GetCorrectFrame(Bullet_t* bullet, Vector2 dir)
             switch (currentY)
             {
                 case 0:
-                    bullet->correctFrame = 4; //Left
+                    bullet->correctFrame = 4; //left
                     break;
                 case 1:
                     bullet->correctFrame = 0; //Diagonal left going up
@@ -103,7 +105,6 @@ void BulletOnCollision(Bullet_t* bullet, char type)
 }
 
 
-//Free bullet when pressing esc to quit the game  and set all variables to their default value
 void FreeBullet(Bullet_t* bullet)
 {
     bullet->bulletPixelHeight = 0;

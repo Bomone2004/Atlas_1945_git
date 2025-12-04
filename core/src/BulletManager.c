@@ -2,12 +2,16 @@
 #include "raylib.h"
 
 BulletManager_t* BulletManager_new(){
-    BulletManager_t* bulletManager = calloc(1, sizeof(BulletManager_t)); //Allocation in memory of the bullet manager
+    //Allocation in memory 
+    BulletManager_t* bulletManager = calloc(1, sizeof(BulletManager_t)); 
 
     bulletManager->bulletCount = 25;
 
-    bulletManager->enemyBullets = calloc(bulletManager->bulletCount, sizeof(BulletManager_t));//Allocation in memory of enemy bullets
-    bulletManager->playerBUllets = calloc(bulletManager->bulletCount, sizeof(BulletManager_t));//Allocation in memory of player bullets
+    //Allocation in memory of enemy bullets
+    bulletManager->enemyBullets = calloc(bulletManager->bulletCount, sizeof(BulletManager_t));
+
+    //Allocation in memory of player bullets
+    bulletManager->playerBUllets = calloc(bulletManager->bulletCount, sizeof(BulletManager_t));
 
     PopulateArray(bulletManager);
 
@@ -19,10 +23,13 @@ void PopulateArray(BulletManager_t* bulletManager) {
     for (int i = 0; i < bulletManager->bulletCount; i++) {
         bulletManager->enemyBullets[i] = Bullet_new();
         bulletManager->enemyBullets[i]->isActive = false;
+        //Position out of Windows
         bulletManager->enemyBullets[i]->position.x = -200;
         bulletManager->enemyBullets[i]->position.y = -200;
+
         bulletManager->playerBUllets[i] = Bullet_new();
         bulletManager->playerBUllets[i]->isActive = false;
+        //Position out of Windows
         bulletManager->playerBUllets[i]->position.x = -200;
         bulletManager->playerBUllets[i]->position.y = -200;
     }
@@ -35,7 +42,6 @@ void ActivatePlayerBullet(BulletManager_t* bulletManager, Vector2 PlayerBulletPo
             bulletManager->playerBUllets[i]->isActive = true;
             bulletManager->playerBUllets[i]->isPlayerBullet = true;
             bulletManager->playerBUllets[i]->position = PlayerBulletPosition;
-            GetCorrectFrame(bulletManager->playerBUllets[i],(Vector2){0,1});
             break;
         }
     }
@@ -57,7 +63,7 @@ void ActivateEnemyBullet(BulletManager_t* bulletManager, Vector2 EnemyBulletPosi
     }
 }
 
-//Doing two for is not really ideal for the program, but if i tried to put them together it tended to bug out sometimes
+
 void UpdateBullets(BulletManager_t* bulletManager){
     for (int i = 0; i < bulletManager->bulletCount; i++) 
     {
@@ -73,7 +79,7 @@ void UpdateBullets(BulletManager_t* bulletManager){
 void DrawBulletManager(BulletManager_t* bulletManager, Texture2D spritesheet){
     for (int i = 0; i < bulletManager->bulletCount; i++) {
        if (bulletManager->playerBUllets[i]->isActive) {
-            Rectangle source_bullet = (Rectangle){1, 235, bulletManager->playerBUllets[i]->bulletPixelWidth, bulletManager->playerBUllets[i]->bulletPixelHeight};
+            Rectangle source_bullet = (Rectangle){36, 169, bulletManager->playerBUllets[i]->bulletPixelWidth, bulletManager->playerBUllets[i]->bulletPixelHeight};
             Rectangle dest_bullet = (Rectangle){bulletManager->playerBUllets[i]->position.x,bulletManager->playerBUllets[0]->position.y, bulletManager->playerBUllets[i]->bulletPixelWidth*0.5f,bulletManager->playerBUllets[i]->bulletPixelHeight*0.5f};  //(float)GetScreenWidth(), (float)GetScreenHeight()
             Vector2 orig_bullet = (Vector2){0};
 

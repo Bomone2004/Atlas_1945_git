@@ -1,7 +1,8 @@
 #include "seaSprite.h"
 
 seaSprite_t* seaSprite_new(){
-    seaSprite_t* seaSprite = calloc(1, sizeof(seaSprite_t)); //Allocation of a sea sprite in memory
+    //Allocation of a sea sprite in memory
+    seaSprite_t* seaSprite = calloc(1, sizeof(seaSprite_t)); 
 
     seaSprite->position.x = 0;
     seaSprite->position.y = 0;

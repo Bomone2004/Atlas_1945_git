@@ -22,8 +22,6 @@ typedef struct Bullet_t
     bool isActive;
 
     bool isPlayerBullet;
-    // int playerTilesX;
-    // int playerTilesY;
 
 }Bullet_t;
 

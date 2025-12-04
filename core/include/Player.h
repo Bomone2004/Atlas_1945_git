@@ -28,6 +28,9 @@ typedef struct playerSprite_t
     float shootCooldown;
     float speed;
 
+    float speedAplha;
+    float alpha ;
+
 
     // int playerTilesX;
     // int playerTilesY;

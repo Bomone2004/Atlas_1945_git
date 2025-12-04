@@ -25,17 +25,16 @@
 int main(void)
 {   
     InitAudioDevice();
-    static int screenWidth = 640;
-    static int screenHeight = 480;
+    static int screenWidth = 1920;
+    static int screenHeight = 1080;
     
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     SetTargetFPS(60);
 
+    //Inizialization
     UIScreen_t* UI_Screen = UIScreen_new(screenWidth,screenHeight);
 
     seaSpriteManager_t* seaSpriteManager = seaSprite_Manager_new(screenWidth,screenHeight);
-    PopulateSeaSpriteManagerArray(seaSpriteManager);
-    SpawnSeaSprite(seaSpriteManager);
     
     BulletManager_t* bulletManager = BulletManager_new();
 
@@ -73,6 +72,7 @@ int main(void)
         time += delta_time;
         unsigned char r = (unsigned char) ((sin(time) * 0.5f + 0.5f) * 255);
 
+        //Update
         UpdateSeaSpriteManager(seaSpriteManager, delta_time);
 
         UpdatePlayer(playerSprite);
@@ -89,6 +89,7 @@ int main(void)
 
             ClearBackground(BLACK);
 
+            //Draw
             DrawSeaSpriteManager(seaSpriteManager, spritesheet);
 
             DrawPlayer(playerSprite,spritesheet);
@@ -102,6 +103,7 @@ int main(void)
         EndDrawing();
     }
 
+    //Clear
     UnloadMusicStream(music);
     UnloadTexture(spritesheet);
     FreeSeaSpriteManager(seaSpriteManager);

@@ -13,9 +13,11 @@ Collision_Manager_t* Collision_manager_new(playerSprite_t* player,EnemyContainer
 
 void CheckCollisions(Collision_Manager_t* collisionManager)
 {
-    //Get player and his collision box
+    //Get player and check his collision box
     playerSprite_t* player = collisionManager->playerReference;
     Rectangle playerColl = (Rectangle){player->position.x,player->position.y,player->playerPixelWidth,player->playerPixelHeight};
+
+    //Check if is Invisible Times
     if(!player->isHit)
     {
         for(int i = 0; i < collisionManager->enemiesReferences->enemyCount; i++)
@@ -53,6 +55,7 @@ void CheckCollisions(Collision_Manager_t* collisionManager)
                 }
             }
 
+            //Check EnemyBullet Collision to player
             if(!player->isHit)
             {
                 //Same for the player, expect if the is in his invisibility frames after getting hit
@@ -71,6 +74,8 @@ void CheckCollisions(Collision_Manager_t* collisionManager)
             
         }
     }
+
+    //Collision of bullet 
     for(int i = 0; i < collisionManager->bulletsReferences->bulletCount; i++)
     {
         Bullet_t* playerbullet = collisionManager->bulletsReferences->playerBUllets[i];
