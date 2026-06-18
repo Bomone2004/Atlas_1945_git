@@ -30,16 +30,16 @@ void PopulateEnemyArray(EnemyContainer_t* container,BulletManager_t* bulletManag
     }
 }
 
-void SpawnEnemy(EnemyContainer_t* container, float x, float y) {
-    for (int i = 0; i < container->enemyCount; i++) {
-        if (!container->enemies[i]->isActive) {
-            container->enemies[i]->isActive = true;
-            container->enemies[i]->position.x = GetRandomValue(0, GetScreenWidth() - container->enemies[i]->enemyPixelWidth );
-            container->enemies[i]->position.y = GetRandomValue(0, GetScreenHeight());
-            break;
-        }
-    }
-}
+// void SpawnEnemy(EnemyContainer_t* container, float x, float y) {
+//     for (int i = 0; i < container->enemyCount; i++) {
+//         if (!container->enemies[i]->isActive) {
+//             container->enemies[i]->isActive = true;
+//             container->enemies[i]->position.x = GetRandomValue(0, GetScreenWidth() - container->enemies[i]->enemyPixelWidth );
+//             container->enemies[i]->position.y = GetRandomValue(0, GetScreenHeight());
+//             break;
+//         }
+//     }
+// }
 
 void UpdateEnemiesManager(EnemyContainer_t* container) {
     
